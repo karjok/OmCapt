@@ -1,0 +1,31 @@
+{
+  "manifest_version": 3,
+  "name": "OmCapt",
+  "version": "1.0",
+  "description": "Ome.tv autocaption text \nNo need to type the same words repeatedly.\nBy Karjok Pangesty",
+  "permissions": [
+    "activeTab",
+    "scripting"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://ome.tv/*"],
+      "js": ["content.js"]
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icon16.png",
+      "32": "icon32.png",
+      "48": "icon48.png",
+      "128": "icon128.png"
+    }
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

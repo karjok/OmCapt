@@ -1,4 +1,4 @@
-<center><img src="https://i.ibb.co/J5FDfDK/Om-Capt-Icon.png" width="100"></center>
+<div align="center"><img src="https://i.ibb.co/J5FDfDK/Om-Capt-Icon.png" width="200"></div>
 
 <h1>OmCapt - Ome.tv auto caption</h1>
 <p>No more type the same words repeatedly</p>
@@ -8,7 +8,7 @@
   <li>Hide Ome.tv logo, active users and download app buttons</li>
   <li>Press CTRL to click 'Next' button</li>
   <li>Add or delete captions</li>
-  <li>Auto skip Wait Button popup/li>
+  <li>Auto skip Wait Button popup</li>
 </ul>
 <h3>Instalation</h3>
 <ol>

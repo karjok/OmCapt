@@ -143,6 +143,7 @@ hideElements();
 
 
 function main() {
+    initSkip();
     const wrapper = document.querySelector(".chat-container");
     if (!wrapper) return;
     
@@ -160,13 +161,46 @@ function main() {
     });
 }
 
-
 function add_text() {
     newDiv.innerHTML = "";
     buttonList.forEach(function (text) {
         createButton(text, newDiv);
     });
     localStorage.setItem("list_text", JSON.stringify(buttonList));
+}
+
+
+function initSkip() {
+    
+    function checkForPopup() {
+        const popUp = document.getElementById("ShowFacePopup");
+        if (popUp) {
+            
+            const skip = document.querySelector(".ok");
+            if (!skip) {
+                console.log("Skip button not found");
+                return;
+            }
+            if (skip.classList.contains("disabled")) {
+                    skip.classList.remove("disabled");
+                    skip.classList.add("enabled");
+                    skip.click();
+                    console.log("wait time skipped");
+            }
+        }
+    }
+    
+    
+    
+    checkForPopup();
+    
+    
+    const intervalId = setInterval(checkForPopup, 1000); 
+    
+    
+    window.addEventListener('beforeunload',function() {
+        clearInterval(intervalId);
+    });
 }
 
 if (!document.getElementById("myContainer")){

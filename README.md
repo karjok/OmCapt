@@ -9,7 +9,15 @@
   <li>Press CTRL to click 'Next' button</li>
   <li>Add or delete captions</li>
   <li>Auto skip Wait Button popup</li>
+  <li>AutoSend Capability</li>
 </ul>
+<h3>DEMO</h3>
+
+
+https://github.com/karjok/OmCapt/assets/37218080/7d6fe699-7955-49dc-b265-3859ed094f22
+
+
+Youtube: <a href="https://youtu.be/2fdUDPHKoU8?si=THoxm8p9jdIMkJWi">https://youtu.be/2fdUDPHKoU8?si=THoxm8p9jdIMkJWi</a>
 <h3>Instalation</h3>
 <ol>
   <li>

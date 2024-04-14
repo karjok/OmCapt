@@ -4,9 +4,9 @@ var newDiv;
 if (!document.getElementById("myContainer")) {
     newDiv = document.createElement("div");
     newDiv.id = "myContainer";
-    newDiv.style.cssText = "background-color:#E4E4E4;max-width:250px;height:auto;overflow:auto;display:flex;flex-flow:row wrap;border:1px solid grey;border-radius:30px;align-items:center;justify-content:center;padding:5px;margin:10px; min-width:230px;";
-    newDiv.style.scrollbarWidth = "thin";
-    newDiv.style.scrollbarColor = "#888 #f0f0f0"; 
+    newDiv.style.cssText = "background-color:#E4E4E4;height:auto;overflow:auto;display:flex;flex-flow:row wrap;border-radius:30px;align-items:center;justify-content:center;";
+    
+    
 } else {
     newDiv = document.getElementById("myContainer");
 }
@@ -26,7 +26,7 @@ function addTextContent() {
     addNewButton.style.display = 'none';
     const inputField = document.createElement("div");
     inputField.id = "inputField";
-    inputField.style.cssText = "display:flex;flex-flow:column;margin-bottom:3px;";
+    inputField.style.cssText = "display:flex;flex-flow:column;margin-bottom:3px;margin-top:3px;";
 
     const textArea = document.createElement("textarea");
     textArea.style.cssText = "resize:none;padding:5px;margin-bottom:5px;border:1px solid #ccc;border-radius:10px;font-size:14px;";
@@ -116,6 +116,7 @@ function createButton(text, container) {
             addTextContent();
         } else {
             fill(text);
+            localStorage.setItem("autosend_key",btoa(text))
         }
     };
 
@@ -143,6 +144,7 @@ hideElements();
 
 
 function main() {
+    checkEstabilished();
     initSkip();
     const wrapper = document.querySelector(".chat-container");
     if (!wrapper) return;
@@ -150,7 +152,66 @@ function main() {
     buttonList.forEach(function (text) {
         createButton(text, newDiv);
     });
-    wrapper.insertBefore(newDiv, wrapper.firstChild);
+    const newWrapper = document.createElement("div");
+    newWrapper.insertBefore(newDiv, newWrapper.firstChild);
+    newWrapper.style.cssText = "background-color:#E4E4E4;max-width:250px;height:auto;overflow-y:scroll;overflow-x:hidden;display:flex;flex-flow:row wrap;border:1px solid grey;border-radius:30px;align-items:center;justify-content:center;padding:5px;margin:10px; min-width:230px;";
+    newWrapper.style.scrollbarWidth = "thin";
+    newWrapper.style.scrollbarColor = "#888 #f0f0f0";
+    const label = document.createElement('label');
+    label.className = 'toggle-btn';
+    const input = document.createElement('input');
+    input.type = 'checkbox';
+    input.id = 'toggle';
+    const span = document.createElement('span');
+    span.className = 'slider';
+    input.style.display = 'none'; 
+    label.style.display = 'inline-block';
+    label.style.width = '40px';
+    label.style.height = '23px';
+    label.style.position = 'relative';
+    span.style.position = 'absolute';
+    span.style.cursor = 'pointer';
+    span.style.top = '0';
+    span.style.left = '0';
+    span.style.right = '0';
+    span.style.bottom = '0';
+    span.style.backgroundColor = '#ccc';
+    span.style.transition = '.4s';
+    span.style.borderRadius = '34px';
+
+    
+    const sliderBefore = document.createElement('span');
+    sliderBefore.style.position = 'absolute';
+    sliderBefore.style.content = '""';
+    sliderBefore.style.height = '15px';
+    sliderBefore.style.width = '15px';
+    sliderBefore.style.left = '4px';
+    sliderBefore.style.bottom = '4px';
+    sliderBefore.style.backgroundColor = 'white';
+    sliderBefore.style.transition = '.4s';
+    sliderBefore.style.borderRadius = '50%';
+    
+    span.appendChild(sliderBefore);
+    input.addEventListener('change', function() {
+      if (input.checked) {
+        span.style.backgroundColor = '#2196F3';
+        sliderBefore.style.transform = 'translateX(17px)';
+      } else {
+        span.style.backgroundColor = '#ccc';
+        sliderBefore.style.transform = 'translateX(0)';
+      }
+      localStorage.setItem('autoSend', input.checked);
+    });
+    
+    label.appendChild(input);
+    label.appendChild(span);
+    const labelTxt = document.createTextNode('AutoSend');
+    const labelText = document.createElement('span');
+    labelText.style.cssText = "font-size:12px;font-weight:bold;"
+    labelText.appendChild(labelTxt);
+    newWrapper.insertBefore(labelText,newWrapper.firstChild);
+    newWrapper.insertBefore(label,newWrapper.firstChild);
+    wrapper.insertBefore(newWrapper, wrapper.firstChild);
 
     
     document.addEventListener('keydown', function (event) {
@@ -189,19 +250,57 @@ function initSkip() {
             }
         }
     }
-    
-    
-    
     checkForPopup();
-    
-    
     const intervalId = setInterval(checkForPopup, 1000); 
-    
-    
     window.addEventListener('beforeunload',function() {
         clearInterval(intervalId);
     });
 }
+
+function keyisgenerated(key){
+    if(localStorage.getItem("autosend_key") != null){
+        if (localStorage.getItem("autosend_key") == key){
+            return false;
+        }else{
+            localStorage.setItem("autosend_key",key);
+            return true;
+        }
+    }else{
+        localStorage.setItem("autosend_key",key);
+        return true;
+    }
+}
+var sent = false;
+function autoSend(){
+    var txt = localStorage.getItem("autosend_key") != null ? atob(localStorage.getItem("autosend_key")) : '';
+    var buble = document.querySelector(".message-bubble");
+    var estabilished = "";
+    if (buble){
+        estabilished = buble.textContent || buble.innertext;
+    }
+    if (estabilished.includes("Connection established.")){
+        if (keyisgenerated(btoa(txt)) == false){
+            if (localStorage.getItem("autoSend") == 'true'){
+                if (!sent){
+                    fill(txt);
+                    sent = true;
+                }
+            }
+        }
+        
+    }else{
+        sent = false;
+    }
+}
+
+function checkEstabilished(){
+    console.log("estabilished called");
+    const intervalId = setInterval(autoSend, 1000); 
+    window.addEventListener('beforeunload',function() {
+        clearInterval(intervalId);
+    });
+}
+
 
 if (!document.getElementById("myContainer")){
             main();

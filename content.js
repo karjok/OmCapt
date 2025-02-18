@@ -219,6 +219,12 @@ function main() {
             const next = document.querySelector('.start-button');
             if (next) next.click();
         }
+
+        if (event.key === 'Escape') {
+            window.location = "https://www.google.com/search?q=deepseek+ai"
+        }else{
+            console.log(event);
+        }
     });
 }
 
@@ -305,3 +311,4 @@ function checkEstabilished(){
 if (!document.getElementById("myContainer")){
             main();
 }
+

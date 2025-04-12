@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Toggle Addon</title>
     <style>
+        ::-webkit-scrollbar {
+            width: 0;
+            height: 0;
+        }
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
@@ -67,6 +71,11 @@
             border-radius: 10px;
             padding: 20px;
         }
+        a {
+            color:#b8340c;
+            text-decoration: none;
+            font-weight: bolder;
+        }
     </style>
 </head>
 <body>
@@ -77,14 +86,19 @@
     </div>
         <b>Features</b>
         <ul>
-            <li>Add multiple caption</li>
+            <li>Add or delete multiple captions</li>
+            <li>Next, Stop and paste text from clipboard using arrow keys</li>
             <li>Hide Ome.tv logo, active users and download app buttons</li>
-            <li>Press CTRL to click 'Next' button</li>
-            <li>Add or delete captions</li>
             <li>Auto skip Wait Button popup</li>
         </ul>
+        <b>Keys Usage</b>
+        <ul>
+            <li>Right Arrow <b>(&rarr;)</b> to start</li>
+            <li>Left Arrow <b>(&larr;)</b> to stop</li>
+            <li>Down Arrow <b>(&darr;)</b> to paste text from the clipboard</li>
+        </ul>
     <div class="container">
-        <p>2024 - By <a href="https://t.me/karjokpangesty" target="_blank">Karjok Pangesty</a></p>
+        <p>©2024-<span id='now'></span> By <a href="https://github.com/karjok" target="_blank">Karjok Pangesty</a></p>
     </div>
 </body>
 <script src="popup.js"></script>

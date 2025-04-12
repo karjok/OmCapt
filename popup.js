@@ -12,3 +12,9 @@ async function executeContentScript() {
 
 
 executeContentScript();
+
+
+document.addEventListener('DOMContentLoaded', () => {
+  const year = new Date().getFullYear();
+  document.getElementById('now').textContent = year;
+});
